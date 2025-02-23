@@ -3,3 +3,4 @@ build/
 .catkin_workspace
 .vscode/
 src/FAST-LIVO/PCD/*
+src/FAST-LIVO/Log/*.txt
