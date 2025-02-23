@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="mid360">
 
-<!-- some property-->>
+<!-- some property-->
   <xacro:property name="M_PI" value="3.14159" />
   <xacro:property name="laser_min_range" value="0.1" />
   <xacro:property name="laser_max_range" value="200.0" />
@@ -66,7 +66,7 @@
           <downsample>${downsample}</downsample>
           <!--csv_file_name>package://livox_laser_simulation/scan_mode/mid360-real-centr.csv</csv_file_name-->
           <csv_file_name>mid360-real-centr.csv</csv_file_name>
-          <publish_pointcloud_type>2</publish_pointcloud_type>
+          <publish_pointcloud_type>3</publish_pointcloud_type>
           <ros_topic>${ros_topic}</ros_topic>
           <frameName>livox</frameName>
         </plugin>
@@ -108,7 +108,9 @@
   </xacro:macro>
 
 
-  <xacro:Livox_Mid360 name="livox" />
-  <xacro:include filename="$(find livox_laser_simulation)/models/car_model.xacro" />
-  <xacro:link_oasis name="oasis" />
+  <!--xacro:Livox_Mid360 name="livox" /-->
+  <!--xacro:include filename="$(find livox_laser_simulation)/models/car_model.xacro" /-->
+  <!--xacro:include filename="$(find livox_laser_simulation)/models/imu.xacro"/-->
+  <!--xacro:link_oasis name="oasis" />
+  <xacro:imu_sensor name="imu"/-->
 </robot>

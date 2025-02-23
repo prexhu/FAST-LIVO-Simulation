@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="IMU">
+  <xacro:macro name="gazebo_ros_imu" params="TopicName:=livox/imu name:=imu">
+    <gazebo reference="${name}">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <topic>${TopicName}</topic>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>${TopicName}</topicName>
+          <bodyName>imu</bodyName>
+          <updateRateHZ>10.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>imu</frameName>
+          <initialOrientationAsReference>false</initialOrientationAsReference>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+  <!-- IMUI inertial matrix -->
+  <xacro:macro name="IMU_inertial_matrix" params="m:=0.1 l:=0.1 w:=0.07 h:=0.03">
+    <inertial>
+      <mass value="${m}" />
+      <inertia ixx="${m*(h*h + l*l)/12}" ixy="0" ixz="0"
+        iyy="${m*(w*w + l*l)/12}" iyz="0"
+        izz="${m*(w*w + h*h)/12}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="imu_sensor" params="name:=imu parentLink:=oasis_300">
+    <link name="${name}" />
+    <xacro:IMU_inertial_matrix />
+    <visual>
+      <origin xyz="-0.35 0 0.03" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 0.07 0.03" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.1 0.07 0.03" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </collision>
+    <joint name="imu2oasis_300" type="fixed">
+      <parent link="${parentLink}" />
+      <child link="${name}" />
+      <origin xyz="-0.35 0 0.03" />
+    </joint>
+    <xacro:gazebo_ros_imu TopicName="livox/imu" name="imu"/>
+  </xacro:macro>
+
+  <!--xacro:imu_sensor name="imu" /-->
+</robot>

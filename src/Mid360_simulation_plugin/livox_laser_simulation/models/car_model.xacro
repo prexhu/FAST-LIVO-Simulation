@@ -45,4 +45,5 @@
     </joint>
     </xacro:macro>
 
+  <!--xacro:link_oasis name="oasis" /-->
 </robot>

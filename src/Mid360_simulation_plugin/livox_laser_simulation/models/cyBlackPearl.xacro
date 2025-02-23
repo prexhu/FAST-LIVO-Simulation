@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="cyBlackPearl">
+  <xacro:include filename="$(find livox_laser_simulation)/models/livox_mid360.xacro" />
+  <xacro:include filename="$(find livox_laser_simulation)/models/car_model.xacro" />
+  <xacro:include filename="$(find livox_laser_simulation)/models/imu.xacro" />
+  <xacro:Livox_Mid360 name="livox" />
+  <xacro:imu_sensor name="imu" />
+  <xacro:link_oasis name="oasis" />
+</robot>
