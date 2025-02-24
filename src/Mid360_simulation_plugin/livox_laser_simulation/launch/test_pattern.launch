@@ -24,7 +24,7 @@
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg cyBlackPearl)" />
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model livox_lidar -param robot_description" />
 	<!-- This node launches rviz -->
-	<!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find livox_laser_simulation)/rviz/test_pattern.rviz" /-->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find livox_laser_simulation)/rviz/test_pattern.rviz" />
   <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen" />
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
 	<node pkg="tf2_ros" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0  /livox_base /livox" />
