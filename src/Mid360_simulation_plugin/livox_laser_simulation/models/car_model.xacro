@@ -28,7 +28,7 @@
 				  <mesh filename="package://livox_laser_simulation/meshes/cyber_BlackPearl.dae"/>
             </geometry>
         </collision>
-        <xacro:inertial_matrix mass="1"/>
+        <xacro:inertial_matrix mass="10"/>
 		<kinematic>1</kinematic>
 		<gravity>9.8</gravity>
     </link>

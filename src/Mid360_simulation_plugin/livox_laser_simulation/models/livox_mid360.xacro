@@ -24,7 +24,7 @@
 
    <!-- This is laser plugin macro -->
   <xacro:macro name="Livox_Mid_gazebo_sensor"
-    params="visualize:=True update_rate:=10 resolution:=0.002 noise_mean:=0.0 noise_stddev:=0.01 name:=livox">
+    params="visualize:=true update_rate:=10 resolution:=0.002 noise_mean:=0.0 noise_stddev:=0.01 name:=livox">
     <gazebo reference="${name}">
       <sensor type="ray" name="laser_${name}">
         <pose>0 0 0 0 0 0</pose>> <visualize>${visualize}</visualize>
@@ -66,7 +66,7 @@
           <downsample>${downsample}</downsample>
           <!--csv_file_name>package://livox_laser_simulation/scan_mode/mid360-real-centr.csv</csv_file_name-->
           <csv_file_name>mid360-real-centr.csv</csv_file_name>
-          <publish_pointcloud_type>3</publish_pointcloud_type>
+          <publish_pointcloud_type>2</publish_pointcloud_type>
           <ros_topic>${ros_topic}</ros_topic>
           <frameName>livox</frameName>
         </plugin>
@@ -76,7 +76,7 @@
 
 
 <!-- This is Mid360 Plugin macro which integrate the gazebo laser plugin-->  
-  <xacro:macro name="Livox_Mid360" params="visualize:=True name:=livox">
+  <xacro:macro name="Livox_Mid360" params="visualize:=true name:=livox">
     <!-- This is Mid360 mesh -->>
     <link name="${name}_base">
       <xacro:null_inertial />

@@ -33,10 +33,10 @@
   </xacro:macro>
 
   <xacro:macro name="imu_sensor" params="name:=imu parentLink:=oasis_300">
-    <link name="${name}" />
+    <link name="${name}">
     <xacro:IMU_inertial_matrix />
     <visual>
-      <origin xyz="-0.35 0 0.03" rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <box size="0.1 0.07 0.03" />
       </geometry>
@@ -45,15 +45,17 @@
       <geometry>
         <box size="0.1 0.07 0.03" />
       </geometry>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="0.0 0 0.0" rpy="0 0 0" />
     </collision>
+    </link>
     <joint name="imu2oasis_300" type="fixed">
       <parent link="${parentLink}" />
       <child link="${name}" />
       <origin xyz="-0.35 0 0.03" />
     </joint>
-    <xacro:gazebo_ros_imu TopicName="livox/imu" name="imu"/>
+    <xacro:gazebo_ros_imu TopicName="livox/imu" name="imu" />
   </xacro:macro>
 
-  <!--xacro:imu_sensor name="imu" /-->
+  <!--xacro:imu_sensor
+  name="imu" /-->
 </robot>
