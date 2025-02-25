@@ -5,6 +5,14 @@ Stephen Brawner (brawner@gmail.com)
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="carurdf">
+
+  <!--CarBody-->> <link name="base_footprint">
+    <visual>
+      <geometry>
+        <sphere radius="0.001" />
+      </geometry>
+    </visual>
+  </link>
   <link
     name="base_link">
     <inertial>
@@ -12,7 +20,7 @@ Stephen Brawner (brawner@gmail.com)
         xyz="0.0295434579640815 -5.37183247883988E-09 0.0969137532977708"
         rpy="0 0 0" />
       <mass
-        value="246.126252736902" />
+        value="1.6126252736902" />
       <inertia
         ixx="3.41645415948318"
         ixy="-2.2747223692862E-06"
@@ -29,11 +37,11 @@ Stephen Brawner (brawner@gmail.com)
         <mesh
           filename="package://carurdf/meshes/carbody.dae" />
       </geometry>
-      <material
+      <!--material
         name="">
         <color
           rgba="0.686274509803922 0.658823529411765 0.63921568627451 1" />
-      </material>
+      </material!-->
     </visual>
     <collision>
       <origin
@@ -45,14 +53,31 @@ Stephen Brawner (brawner@gmail.com)
       </geometry>
     </collision>
   </link>
-  <link
+
+
+  <!--Base_Footprint-->
+  <joint
+    name="base_footprint2base_link"
+    type="fixed">
+    <origin
+      xyz="0 0 0.001 "
+      rpy="0 0 0" />
+    <parent
+      link="base_footprint" />
+    <child
+      link="base_link" />
+  </joint>
+
+
+  <!--Wheels-->
+   <link
     name="wheel11">
     <inertial>
       <origin
         xyz="-4.2392E-09 -0.020059 -1.4979E-10"
         rpy="0 0 0" />
       <mass
-        value="1.2166" />
+        value="0.12166" />
       <inertia
         ixx="0.0020082"
         ixy="3.055E-11"
@@ -105,7 +130,7 @@ Stephen Brawner (brawner@gmail.com)
         xyz="-3.995E-09 0.020059 1.4262E-09"
         rpy="0 0 0" />
       <mass
-        value="1.2166" />
+        value="0.12166" />
       <inertia
         ixx="0.0020082"
         ixy="-5.2517E-11"
@@ -158,7 +183,7 @@ Stephen Brawner (brawner@gmail.com)
         xyz="-4.2077E-09 -0.020059 -5.3784E-10"
         rpy="0 0 0" />
       <mass
-        value="1.2166" />
+        value="0.12166" />
       <inertia
         ixx="0.0020082"
         ixy="3.7508E-11"
@@ -211,7 +236,7 @@ Stephen Brawner (brawner@gmail.com)
         xyz="1.3725E-10 0.020059 2.5463E-10"
         rpy="0 0 0" />
       <mass
-        value="1.2166" />
+        value="0.12166" />
       <inertia
         ixx="0.0020082"
         ixy="1.989E-11"
@@ -257,4 +282,248 @@ Stephen Brawner (brawner@gmail.com)
     <axis
       xyz="0 1 0" />
   </joint>
+
+
+  <!--Wheel
+  Contorl-->> <transmission name="base2w11_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base2w11">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base2w11_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission
+    name="base2w12_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base2w12">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base2w12_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission
+    name="base2w21_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base2w21">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base2w21_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission
+    name="base2w22_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base2w22">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base2w22_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo>
+    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+      <updateRate>100.0</updateRate>
+      <robotNamespace>/</robotNamespace>
+      <leftFrontJoint>base2w11</leftFrontJoint>
+      <rightFrontJoint>base2w12</rightFrontJoint>
+      <leftRearJoint>base2w21</leftRearJoint>
+      <rightRearJoint>base2w22</rightRearJoint>
+      <wheelSeparation>0.040120</wheelSeparation>
+      <wheelDiameter>0.16</wheelDiameter>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <torque>20</torque>
+      <topicName>cmd_vel</topicName>
+      <broadcastTF>false</broadcastTF>
+    </plugin>
+  </gazebo>
+
+
+  <!--Multisensor
+  Base-->> <link name="multisensor">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carurdf/meshes/multisensor.dae" />
+      </geometry>
+    </visual>
+  </link>
+  <joint
+    name="base2multisensor"
+    type="fixed">
+    <origin
+      xyz="0.459805472903942 0 0.07482260358453"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="multisensor" />
+  </joint>
+
+
+  <!--Camera-->> <link name="camera">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <box size="0.01 0.01 0.01" />
+    </geometry>
+  </link>
+  <joint name="camera2multisensor"
+    type="fixed">
+    <parent link="multisensor" />
+    <child link="camera" />
+    <origin xyz="0.117 -0.052355 0" rpy="0 0 0" />
+  </joint>
+  <gazebo reference="camera">
+    <sensor type="depth" name="camera">
+      <always_on>true</always_on>
+      <update_rate>30.0</update_rate>
+      <camera>
+        <horizontal_fov>1.05</horizontal_fov>
+        <image>
+          <format>R8G8B8</format>
+          <width>1280</width>
+          <height>720</height>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+      </camera>
+      <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <cameraName>/camera</cameraName>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>10</updateRate>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <frameName>camera</frameName>
+        <baseline>0.1</baseline>
+        <distortion_k1>0.0</distortion_k1>
+        <distortion_k2>0.0</distortion_k2>
+        <distortion_k3>0.0</distortion_k3>
+        <distortion_t1>0.0</distortion_t1>
+        <distortion_t2>0.0</distortion_t2>
+        <pointCloudCutoff>0.4</pointCloudCutoff>
+      </plugin>
+    </sensor>
+  </gazebo>
+    <gazebo
+    reference="camera">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!--IMU-->
+<link name="imu">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.01 0.01 0.01" />
+      </geometry>
+    </visual>
+  </link>
+<joint
+    name="imu2multisensor" type="fixed">
+    <parent link="multisensor" />
+    <child link="imu" />
+    <origin xyz="0.0117 0 0" />
+  </joint>
+ <gazebo reference="imu">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>livox/imu</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>livox/imu</topicName>
+        <bodyName>imu</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+    <gezebo reference="imu">
+    <material>Gazebo/Red</material>
+  </gezebo>
+
+
+  <!--Lidar-->
+    <link name="mid360">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.01 0.01 0.01" />
+      </geometry>
+    </visual>
+  </link>
+ <joint
+    name="lidar2multisensor" type="fixed">
+    <parent link="multisensor" />
+    <child link="mid360" />
+    <origin xyz="0.0117 0.052355 0" rpy="0 0 -0.7853"/>
+  </joint>   
+    <gazebo
+    reference="mid360">
+    <sensor type="ray" name="laser_mid360">
+      <pose>0 0 0 0 0 0</pose>> <visualize>True</visualize>
+        <update_rate>10</update_rate>
+      <!-- This ray plgin is only for visualization. -->
+        <plugin
+        name="gazebo_ros_laser_controller" filename="liblivox_laser_simulation.so">
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>100</samples>
+              <resolution>1</resolution>
+              <min_angle>0</min_angle>
+              <max_angle>6.28</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <!--min_angle>${-7.22/180*M_PI}</min_angle>
+                <max_angle>${55.22/180*M_PI}</max_angle-->
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>150</max>
+            <!--resolution>${resolution}</resolution-->
+            <resolution>1</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.00</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <visualize>True</visualize>
+        <samples>24000</samples>
+        <downsample>1</downsample>
+        <!--csv_file_name>package://livox_laser_simulation/scan_mode/mid360-real-centr.csv</csv_file_name-->
+        <csv_file_name>mid360-real-centr.csv</csv_file_name>
+        <publish_pointcloud_type>2</publish_pointcloud_type>
+        <ros_topic>livox/lidar</ros_topic>
+        <frameName>mid360</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
 </robot>
