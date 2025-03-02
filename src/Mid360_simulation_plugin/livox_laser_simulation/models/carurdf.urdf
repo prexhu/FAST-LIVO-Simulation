@@ -392,8 +392,8 @@ Stephen Brawner (brawner@gmail.com)
       <camera name="camera">
         <horizontal_fov>1.05</horizontal_fov>
         <image>
-          <width>1280</width>
-          <height>720</height>
+          <width>640</width>
+          <height>512</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -412,7 +412,7 @@ Stephen Brawner (brawner@gmail.com)
         <cameraName>left_camera</cameraName>
         <imageTopicName>image</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>camera</frameName>
+        <frameName>camera_init</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
