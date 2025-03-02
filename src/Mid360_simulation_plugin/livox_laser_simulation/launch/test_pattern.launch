@@ -11,7 +11,7 @@
   	<arg name="z" value="0" /-->
 
 	<!-- This is where we select the world file-->
-	<arg name="world" default="$(find livox_laser_simulation)/worlds/test_pattern.world" />
+	<arg name="world" default="$(find livox_laser_simulation)/worlds/test.sdf" />
 
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="world_name" value="$(arg world)"/>

@@ -284,8 +284,8 @@ Stephen Brawner (brawner@gmail.com)
   </joint>
 
 
-  <!--Wheel
-  Contorl-->> <transmission name="base2w11_trans">
+  <!--Wheel Contorl--> 
+  <transmission name="base2w11_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="base2w11">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
@@ -388,7 +388,7 @@ Stephen Brawner (brawner@gmail.com)
     <remapping>clock@/clock</remapping>
   </ros>
     <sensor type="camera" name="camera">
-      <update_rate>60.0</update_rate>
+      <update_rate>40.0</update_rate>
       <camera name="camera">
         <horizontal_fov>1.05</horizontal_fov>
         <image>
@@ -485,13 +485,13 @@ Stephen Brawner (brawner@gmail.com)
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <update_rate>100</update_rate>
+      <update_rate>80</update_rate>
       <visualize>true</visualize>
       <topic>livox/imu</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <topicName>livox/imu</topicName>
         <bodyName>imu</bodyName>
-        <updateRateHZ>10.0</updateRateHZ>
+        <updateRateHZ>0.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
@@ -528,20 +528,20 @@ Stephen Brawner (brawner@gmail.com)
   </ros>
     <sensor type="ray" name="laser_mid360">
       <pose>0 0 0 0 0 0</pose>> <visualize>True</visualize>
-        <update_rate>10</update_rate>
+        <update_rate>60</update_rate>
       <!-- This ray plgin is only for visualization. -->
         <plugin
         name="gazebo_ros_laser_controller" filename="liblivox_laser_simulation.so">
         <ray>
           <scan>
             <horizontal>
-              <samples>100</samples>
+              <samples>200</samples>
               <resolution>1</resolution>
               <min_angle>0.25</min_angle>
               <max_angle>1.75</max_angle>
             </horizontal>
             <vertical>
-              <samples>360</samples>
+              <samples>720</samples>
               <resolution>1</resolution>
               <!--min_angle>${-7.22/180*M_PI}</min_angle>
                 <max_angle>${55.22/180*M_PI}</max_angle-->
@@ -551,7 +551,7 @@ Stephen Brawner (brawner@gmail.com)
           </scan>
           <range>
             <min>0.1</min>
-            <max>150</max>
+            <max>50</max>
             <!--resolution>${resolution}</resolution-->
             <resolution>1</resolution>
           </range>
@@ -569,6 +569,7 @@ Stephen Brawner (brawner@gmail.com)
         <publish_pointcloud_type>3</publish_pointcloud_type>
         <ros_topic>livox/lidar</ros_topic>
         <frameName>mid360</frameName>
+        <parentFrameName>multisensor</parentFrameName> 
       </plugin>
     </sensor>
   </gazebo>
