@@ -1,4 +1,5 @@
 <launch>
+  <param name="use_sim_time" type="bool" value="true"/>
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch" />
   <node
@@ -17,5 +18,5 @@
     pkg="rostopic"
     type="rostopic"
     args="pub /calibrated std_msgs/Bool true" />
-    <include file="$(find carurdf)/launch/display.launch"/>
+    <!--include file="$(find carurdf)/launch/display.launch"/-->
 </launch>
